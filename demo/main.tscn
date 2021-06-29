@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://alcatreize/boxes/Pushbox.cs" type="Script" id=1]
+[ext_resource path="res://alcatreize/boxes/Querier.cs" type="Script" id=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="querier" type="Node2D" parent="."]
+position = Vector2( 24.5841, 144.11 )
+script = ExtResource( 2 )
+
+[node name="node3" type="Node2D" parent="."]
+position = Vector2( 151, 100 )
+script = ExtResource( 1 )
+bounds = Rect2( 0, 0, 50, 50 )
+
+[node name="node2" type="Node2D" parent="."]
+position = Vector2( 496.459, 220.867 )
+script = ExtResource( 1 )
+bounds = Rect2( 0, 0, 50, 50 )

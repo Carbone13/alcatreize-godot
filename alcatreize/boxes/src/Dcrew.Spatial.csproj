@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Dcrew.Spatial</RootNamespace>
+    <Description>A set of highly-optimized, flexible and powerful 2D spatial partitions for MonoGame</Description>
+    <Authors>Dcrew</Authors>
+    <Company>DcrewGames</Company>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/DeanReynolds/Dcrew.Spatial</RepositoryUrl>
+    <PackageTags>MonoGame</PackageTags>
+    <PackageId>Dcrew.Spatial</PackageId>
+    <Version>2.1.1</Version>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" PrivateAssets="All" Version="3.7.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
