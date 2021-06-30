@@ -301,12 +301,51 @@ namespace Alcatreize.Broadphase
                 }
             }
         }
+        
+        public IEnumerable<T> Contact(Rect2 _shape)
+        {
+            IConvex2D shape = (GridAABB) _shape;
+            // Increment our query number to prevent yielding a unit multiple times if it spans more than one cell
+            _queryNumber++;
+
+            foreach (Vector2 cellIndex in shape.Supercover(this))
+            {
+                if (_cells[(int)cellIndex.x, (int)cellIndex.y] != null)
+                {
+                    foreach (var wrapper in _cells[(int)cellIndex.x, (int)cellIndex.y].Contact(shape, (u) => true, _queryNumber))
+                        yield return wrapper.Unit;
+                }
+            }
+        }
 
         /// <summary>
         /// Enumarates all objects that overlap with a convex shape and for which a predicate evaluates to true
         /// </summary>
         public IEnumerable<T> ContactWhich(IConvex2D shape, Predicate<T> predicate)
         {
+            // Increment our query number to prevent yielding a unit multiple times if it spans more than one cell
+            _queryNumber++;
+            int cellsSearched = 0;
+            int unitsAcc = 0;
+
+            foreach (Vector2 cellIndex in shape.Supercover(this))
+            {
+                cellsSearched++;
+                if (_cells[(int)cellIndex.x, (int)cellIndex.y] != null)
+                {
+                    unitsAcc += _cells[(int)cellIndex.x, (int)cellIndex.y].Count;
+                    foreach (var wrapper in _cells[(int)cellIndex.x, (int)cellIndex.y].Contact(shape, predicate, _queryNumber))
+                        yield return wrapper.Unit;
+                }
+            }
+
+            AverageCellsSearched = Mathf.Lerp(AverageCellsSearched, cellsSearched, 0.5f);
+            AverageUnitsPerCell = (float)unitsAcc / cellsSearched;
+        }
+        
+        public IEnumerable<T> ContactWhich(Rect2 _shape, Predicate<T> predicate)
+        {
+            IConvex2D shape = (GridAABB)_shape;
             // Increment our query number to prevent yielding a unit multiple times if it spans more than one cell
             _queryNumber++;
             int cellsSearched = 0;

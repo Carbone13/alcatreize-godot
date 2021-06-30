@@ -66,6 +66,22 @@ namespace Alcatreize.Broadphase
             wrappers.Add(key, wrapper);
             Count++;
         }
+        
+        /// <summary>
+        /// Adds a unit.
+        /// </summary>
+        public void Add(TKey key, T unit, Rect2 _shape)
+        {
+            IConvex2D shape = (GridAABB) _shape;
+            
+            UnitWrapper wrapper = new UnitWrapper(unit, shape);
+
+            foreach (var cell in _getOrCreateSupercover(shape))
+                cell.Add(key, wrapper);
+
+            wrappers.Add(key, wrapper);
+            Count++;
+        }
 
         /// <summary>
         /// Removes unit
@@ -93,6 +109,24 @@ namespace Alcatreize.Broadphase
         /// </summary>
         public void Update(TKey key, IConvex2D newShape)
         {
+            UnitWrapper wrapper = wrappers[key];
+
+            foreach (var cell in _getOrCreateSupercover(wrapper.Shape))
+                cell.Remove(key);
+
+            var newWrapper = new UnitWrapper(wrapper.Unit, newShape);
+
+            foreach (var cell in _getOrCreateSupercover(newShape))
+                cell.Add(key, newWrapper);
+            wrappers[key] = newWrapper;
+        }
+        
+        /// <summary>
+        /// Updates a unit's position / shape
+        /// </summary>
+        public void Update(TKey key, Rect2 _newShape)
+        {
+            IConvex2D newShape =(GridAABB)_newShape;
             UnitWrapper wrapper = wrappers[key];
 
             foreach (var cell in _getOrCreateSupercover(wrapper.Shape))

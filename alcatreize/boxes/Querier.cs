@@ -23,23 +23,8 @@ namespace Alcatreize
             {
                 GlobalPosition = new Vector2(GlobalPosition.x, GlobalPosition.y + 200 * delta);
             }
-
-            var query = Physics.singleton.superGrid.Contact(new GridAABB(GlobalPosition,
-                GlobalPosition + new Vector2(60, 60)));
-                //Physics.singleton.Grid.FindNear(GlobalPosition, new Vector2(60, 60));
-
-            foreach (AABB found in query)
-            {
-                GD.Print(OS.GetTicksMsec() + " Found: " + found.Name);
-            }
-                /*
-            string result = "";
-            foreach (GridClient client in query)
-            {
-                result += " " + client.Name;
-            }
-            if(result != "")
-                GD.Print(OS.GetTicksMsec() + " " + result);*/
+            
+            Physics.GetInRange<Pushbox>(new Rect2());
         }
 
         public override void _Draw ()

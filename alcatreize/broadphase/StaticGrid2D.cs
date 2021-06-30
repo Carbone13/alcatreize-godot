@@ -57,6 +57,18 @@ namespace Alcatreize.Broadphase
 
             Count++;
         }
+        
+        /// <summary>
+        /// Adds a unit.
+        /// </summary>
+        public void Add(T unit, Rect2 _shape)
+        {
+            IConvex2D shape = (GridAABB)_shape;
+            foreach (var cell in _getOrCreateSupercover(shape))
+                cell.Add(new UnitWrapper(unit, shape));
+
+            Count++;
+        }
 
         /// <summary>
         /// Static search grid uses a list per cell

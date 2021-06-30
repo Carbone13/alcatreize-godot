@@ -34,10 +34,15 @@ namespace Alcatreize.Broadphase
         public readonly Vector2 topLeft;
         public readonly Vector2 bottomRight;
 
-        public GridAABB(Vector2 topLeft, float width, float height)
+        public GridAABB (Vector2 topLeft, float width, float height)
         {
             this.topLeft = topLeft;
             this.bottomRight = new Vector2(topLeft.x + width, topLeft.y + height);
+        }
+        
+        public static explicit operator GridAABB (Rect2 input)
+        {
+            return new GridAABB(input.Position, input.Position + input.Size);
         }
 
         public GridAABB(Vector2 topLeft, Vector2 bottomRight)

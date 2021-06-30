@@ -13,8 +13,9 @@ namespace Alcatreize
         // Our hurtboxes
         public List<Hurtbox> Hurtboxes;
 
-        [Signal]
-        public delegate void OnHitByHitbox (Hitbox hitbox);
+        [Signal] public delegate void OnHurtboxTicked (Hitbox hitbox);
+        [Signal] public delegate void CollisionX (int direction, Entity hit);
+        
 
 
         public override void _Ready ()
@@ -41,12 +42,39 @@ namespace Alcatreize
                 }
             }
         }
-
-
-        // Make your hitboxes tick, and damage hurtbox in their way
-        public void TickHitbox ()
+        
+        /// <summary>
+        /// Return the first pushbox hit at the specified position
+        /// You can use it to check for future position, or just pass GlobalPosition to check at the current position
+        /// You can specify the box type, or simply use AABB
+        /// NOTE: This will only return boxes on the right layer !
+        /// </summary>
+        /// <param name="position"></param>
+        public void FirstHitAtPosition<T> (Vector2 position)
         {
             
+        }
+
+        public void GetAllIntersecting<T> ()
+        {
+            
+        }
+
+        public void GetFirstIntersecting<T> ()
+        {
+            
+        }
+
+        /// <summary>
+        /// Make your Hitboxes ticks any hurtboxes they overlap
+        /// Call the signal "Ticked" on these Hurtboxes
+        /// </summary>
+        public void TickHitboxes ()
+        {
+            foreach (Hitbox hitbox in Hitboxes)
+            {
+                hitbox.Tick();
+            }
         }
     }
 }
