@@ -8,10 +8,6 @@
 A custom, deterministic, physics library, with pixel perfection in mind. Designed to be used in the Godot engine. Many game who need rollback netcode or pixel snapping should be interested in this project.
 It only work for C# but a C++ module is planned, which would allow cleaner internal Nodes & GDScript support. Note that Alcatreize is still actively in development and is not yet suitable for production
 
-
-~~~
-The demo branch contains a little Godot Project showcasing what is achievable with Alcatreize
-~~~
 :bangbang: work only in Godot Mono :bangbang:
 
 
@@ -60,8 +56,8 @@ Simply drag & drop the "alcatreize" folder of the main branch anywhere in your G
 
 TODO
 
-#### The demo branch
-The Demo Branch is a Godot sample Project to showcase the usage of this module
+#### The demo 
+You can find a demo of Alcatreize [here](https://github.com/Carbone13/alcatreize-examples)
 
 ## Okay, but why not just using the default Godot physics ?
 
