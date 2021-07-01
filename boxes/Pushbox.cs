@@ -13,10 +13,6 @@ namespace Alcatreize
         {
             if (Engine.EditorHint) return;
             
-            Physics.GetInRange<Hitbox>(new Rect2());
-            
-            Vector2 previous = GlobalPosition;
-            
             if (Input.IsKeyPressed((int) KeyList.Q))
             {
                 GlobalPosition = new Vector2(GlobalPosition.x - 50 * delta, GlobalPosition.y);

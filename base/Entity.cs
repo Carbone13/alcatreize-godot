@@ -15,8 +15,6 @@ namespace Alcatreize
 
         [Signal] public delegate void OnHurtboxTicked (Hitbox hitbox);
         [Signal] public delegate void CollisionX (int direction, Entity hit);
-        
-
 
         public override void _Ready ()
         {
@@ -42,6 +40,20 @@ namespace Alcatreize
                 }
             }
         }
+
+        /// <summary>
+        /// Call this every time you move this entity, it mostly updates the colliders for the broadphase
+        /// </summary>
+        public void OnPostMove ()
+        {
+            Physics.Update(Pushbox);
+
+            foreach (Hitbox hitbox in Hitboxes)
+                Physics.Update(hitbox);
+            
+            foreach (Hurtbox hurtbox in Hurtboxes)
+                Physics.Update(hurtbox);
+        }
         
         /// <summary>
         /// Return the first pushbox hit at the specified position
@@ -55,14 +67,24 @@ namespace Alcatreize
             
         }
 
-        public void GetAllIntersecting<T> ()
+        public IEnumerable<T> GetAllIntersecting<T> () where T : AABB => GetAllIntersecting<T>(GlobalPosition);
+
+        public T GetFirstIntersecting<T> () where T : AABB => GetFirstIntersecting<T>(GlobalPosition);
+
+        public IEnumerable<T> GetAllIntersecting<T> (Vector2 position) where T : AABB
         {
-            
+            if(typeof(T) == typeof(Pushbox))
+                return Pushbox.GetAllHit(position) as IEnumerable<T>;
+
+            return null;
         }
 
-        public void GetFirstIntersecting<T> ()
+        public T GetFirstIntersecting<T> (Vector2 position) where T : AABB
         {
+            if (typeof(T) == typeof(Pushbox))
+                return Pushbox.GetFirstHit(position) as T;
             
+            return null;
         }
 
         /// <summary>
