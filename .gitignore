@@ -26,3 +26,4 @@ data_*/
 !.gitignore
 !alcatreize
 !/alcatreize/*/
+!alcatreize-banner.png
