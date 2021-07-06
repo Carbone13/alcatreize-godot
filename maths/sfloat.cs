@@ -78,8 +78,11 @@ public struct sfloat : IEquatable<sfloat>, IComparable<sfloat>, IComparable, IFo
     private const int MantissaBits = 23;
     private const int ExponentBits = 8;
     private const int ExponentBias = 127;
+    
+
 
     private const uint RawZero = 0;
+    private const uint RawPi = 1078530011;
     private const uint RawNaN = 0xFFC00000; // Same as float.NaN
     private const uint RawPositiveInfinity = 0x7F800000;
     private const uint RawNegativeInfinity = RawPositiveInfinity ^ SignMask;
@@ -92,6 +95,7 @@ public struct sfloat : IEquatable<sfloat>, IComparable<sfloat>, IComparable, IFo
 
 
     public static sfloat Zero => new sfloat(0);
+    public static sfloat Pi => new sfloat(RawPi);
     public static sfloat PositiveInfinity => new sfloat(RawPositiveInfinity);
     public static sfloat NegativeInfinity => new sfloat(RawNegativeInfinity);
     public static sfloat NaN => new sfloat(RawNaN);
@@ -853,6 +857,16 @@ public struct sfloat : IEquatable<sfloat>, IComparable<sfloat>, IComparable, IFo
     public string ToString(IFormatProvider provider) => ((float)this).ToString(provider);
     public string ToStringInv() => ((float)this).ToString(System.Globalization.CultureInfo.InvariantCulture);
 
+    public static sfloat Deg2Rad (sfloat i)
+    {
+        return i * (Pi / (sfloat)180);
+    }
+    
+    public static sfloat Rad2Deg (sfloat i)
+    {
+        return i * ((sfloat)180 / Pi);
+    }
+    
     /// <summary>
     /// Returns the absolute value of the given sfloat number
     /// </summary>

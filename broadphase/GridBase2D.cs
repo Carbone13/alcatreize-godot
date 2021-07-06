@@ -181,7 +181,7 @@ namespace Alcatreize.Broadphase
             // Keep searching and doubling our radius until we've found a unit or when we've searched beyond the limit
             while (nearestWrapper == null && radius <= maxDistance)
             {
-                foreach (Vector2 cellIndex in new Circle(position, radius).Supercover(this))
+                foreach (Vector2 cellIndex in new GridCircle(position, radius).Supercover(this))
                 {
                     if (_cells[(int)cellIndex.x, (int)cellIndex.y] != null)
                         handleCell(_cells[(int)cellIndex.x, (int)cellIndex.y]);
@@ -195,13 +195,23 @@ namespace Alcatreize.Broadphase
             {
                 radius = maxDistance;
 
-                foreach (Vector2 cellIndex in new Circle(position, radius).Supercover(this))
+                foreach (Vector2 cellIndex in new GridCircle(position, radius).Supercover(this))
                     if (_cells[(int)cellIndex.x, (int)cellIndex.y] != null)
                         handleCell(_cells[(int)cellIndex.x, (int)cellIndex.y]);
             }
 
             distSquared = nearestDist;
             return nearestWrapper == null ? default(T) : nearestWrapper.Unit;
+        }
+
+        public int GetObjectCountInCell (int x, int y)
+        {
+            if (_cells[x, y] == null)
+            {
+                return 0;
+            }
+            
+            return _cells[x, y].Count;
         }
 
         /// <summary>
@@ -437,9 +447,7 @@ namespace Alcatreize.Broadphase
                     if (!wrapper.Once(queryNumber))
                         continue;
 
-                    if (!shape.NoContactCertainty(wrapper.Shape) &&
-                        !wrapper.Shape.NoContactCertainty(shape) &&
-                        predicate(wrapper.Unit))
+                    if (predicate(wrapper.Unit))
                         yield return wrapper;
                 }
             }

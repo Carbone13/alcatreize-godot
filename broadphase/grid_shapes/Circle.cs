@@ -26,18 +26,18 @@ using Godot;
 
 namespace Alcatreize.Broadphase.GridShape
 {
-    public struct Circle : IConvex2D
+    public struct GridCircle : IConvex2D
     {
         public readonly Vector2 center;
         public readonly float radius;
 
-        public Circle(Vector2 center, float radius)
+        public GridCircle(Vector2 center, float radius)
         {
             this.center = center;
             this.radius = radius;
         }
 
-        public Circle(float x, float y, float radius)
+        public GridCircle(float x, float y, float radius)
         {
             this.center = new Vector2(x, y);
             this.radius = radius;

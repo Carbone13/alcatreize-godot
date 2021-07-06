@@ -1,4 +1,7 @@
-﻿public struct sfloat2
+﻿using Alcatreize.Maths;
+using Godot;
+
+public struct sfloat2
 {
     public sfloat X { get; set; }
     public sfloat Y { get; set; }
@@ -111,23 +114,111 @@
     #endregion
     
     #region Functions
-    
-    public sfloat Length ()
+
+    public sfloat2 Clone ()
     {
-        return libm.sqrtf(X * X + Y * Y);
+        return new sfloat2(X, Y);
     }
     
-        
+    public sfloat SquaredLength => X * X + Y * Y;
+
+    public sfloat Length
+    {
+        get => libm.sqrtf(SquaredLength);
+        set
+        {
+            sfloat eps = sfloat.Epsilon;
+            sfloat angle = libm.atan2f(Y, X);
+
+            X = libm.cosf(angle) * value;
+            Y = libm.sinf(angle) * value;
+
+            if (sfloat.Abs(X) < eps) X = sfloat.Zero;
+            if (sfloat.Abs(Y) < eps) Y = sfloat.Zero;
+        }
+    }
+    
+    public sfloat2 normalized => new sfloat2(X / Length, Y / Length);
+
     public sfloat2 Normalize ()
     {
-        sfloat length = Length();
+        var len = Length;
         
-        return new sfloat2(X / length, Y / length);
+        if (len == sfloat.Zero)
+        {
+            X = sfloat.One;
+            return this;
+        }
+
+        X /= len;
+        Y /= len;
+
+        return this;
+    }
+
+    public sfloat2 Transform (Matrix matrix)
+    {
+        sfloat2 final = this;
+
+        final.X = X * matrix.A + Y * matrix.C + matrix.TX;
+        final.Y = X * matrix.B + Y * matrix.D + matrix.TY;
+
+        return final;
+    }
+    
+    public sfloat2 Truncate (sfloat max)
+    {
+        Length = (sfloat) sfloat.Min(max, Length);
+        return this;
+    }
+
+    public sfloat2 Invert ()
+    {
+        X = -X;
+        Y = -Y;
+
+        return this;
+    }
+
+    public sfloat Dot (sfloat2 other)
+    {
+        return X * other.X + Y * other.Y;
+    }
+    
+    public sfloat Cross (sfloat2 other)
+    {
+        return X * other.X - Y * other.Y;
+    }
+
+    public sfloat2 Add (sfloat2 other)
+    {
+        X += other.X;
+        Y += other.Y;
+
+        return this;
+    }
+    
+    public sfloat2 Substract (sfloat2 other)
+    {
+        X -= other.X;
+        Y -= other.Y;
+
+        return this;
     }
     
     #endregion
 
     #region Operators
+
+    public static implicit operator Vector2 (sfloat2 input)
+    {
+        return new Vector2((float)input.X, (float)input.Y);
+    }
+
+    public static implicit operator sfloat2 (Vector2 input)
+    {
+        return new sfloat2(input.x, input.y);
+    }
     
     public static sfloat2 operator *(sfloat2 input, sfloat factor)
     {
@@ -147,6 +238,16 @@
     public static sfloat2 operator /(sfloat2 input, sfloat2 factor)
     {
         return new sfloat2(input.X / factor.X, input.Y / factor.Y);
+    }
+
+    public static sfloat2 operator - (sfloat2 one, sfloat2 two)
+    {
+        return new sfloat2(one.X - two.X, one.Y - two.Y);
+    }
+    
+    public static sfloat2 operator + (sfloat2 one, sfloat2 two)
+    {
+        return new sfloat2(one.X + two.X, one.Y + two.Y);
     }
 
     public static sfloat2 operator -(sfloat2 input)
