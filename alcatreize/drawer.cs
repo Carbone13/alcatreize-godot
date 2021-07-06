@@ -30,6 +30,9 @@ public class drawer : Node2D
                     if(shape.ShapeType == ShapeType.Circle)
                         if(Collision.AABBvsCircle(me.GetShape() as Alcatreize.AABB, shape.GetShape() as Alcatreize.Circle))
                             names += shape.Name + "\n";
+                    if(shape.ShapeType == ShapeType.Capsule)
+                        if(Collision.AABBVsCapsule(me.GetShape() as Alcatreize.AABB, shape.GetShape() as Alcatreize.Capsule))
+                            names += shape.Name + "\n";
                 }
             }
         }
@@ -48,6 +51,9 @@ public class drawer : Node2D
                             names += shape.Name + "\n";
                     if(shape.ShapeType == ShapeType.Circle)
                         if(Collision.OBBvsCircle(me.GetShape() as Alcatreize.OBB, shape.GetShape() as Alcatreize.Circle))
+                            names += shape.Name + "\n";
+                    if(shape.ShapeType == ShapeType.Capsule)
+                        if(Collision.OBBVsCapsule(me.GetShape() as Alcatreize.OBB, shape.GetShape() as Alcatreize.Capsule))
                             names += shape.Name + "\n";
                 }
             }
@@ -68,13 +74,33 @@ public class drawer : Node2D
                     if(shape.ShapeType == ShapeType.Circle)
                         if(Collision.CircleVsCircle(me.GetShape() as Alcatreize.Circle, shape.GetShape() as Alcatreize.Circle))
                             names += shape.Name + "\n";
+                    if(shape.ShapeType == ShapeType.Capsule)
+                        if(Collision.CircleVsCapsule(me.GetShape() as Alcatreize.Circle, shape.GetShape() as Alcatreize.Capsule))
+                            names += shape.Name + "\n";
                 }
             }
         }
         
         if (me.ShapeType == ShapeType.Capsule)
         {
-            
+            foreach (Alcatreize.Shape shape in shapes)
+            {
+                if (shape != me)
+                {
+                    if (shape.ShapeType == ShapeType.AABB)
+                        if(Collision.AABBVsCapsule(shape.GetShape() as Alcatreize.AABB, me.GetShape() as Alcatreize.Capsule))
+                            names += shape.Name + "\n";
+                    if (shape.ShapeType == ShapeType.OBB)
+                        if(Collision.OBBVsCapsule(shape.GetShape() as Alcatreize.OBB, me.GetShape() as Alcatreize.Capsule))
+                            names += shape.Name + "\n";
+                    if(shape.ShapeType == ShapeType.Circle)
+                        if(Collision.CircleVsCapsule(shape.GetShape() as Alcatreize.Circle, me.GetShape() as Alcatreize.Capsule))
+                            names += shape.Name + "\n";
+                    if(shape.ShapeType == ShapeType.Capsule)
+                        if(Collision.CapsuleVsCapsule(me.GetShape() as Alcatreize.Capsule, shape.GetShape() as Alcatreize.Capsule))
+                            names += shape.Name + "\n";
+                }
+            }
         }
         
         

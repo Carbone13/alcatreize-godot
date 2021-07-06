@@ -36,6 +36,22 @@ namespace Alcatreize.alcatreize
 
         public static bool OBBvsOBB (OBB a, OBB b)
         {
+            AABB local1 = new AABB(sfloat2.Zero, a.HalfExtents);
+
+            sfloat2 r = b.Center - a.Center;
+
+            OBB local2 = new OBB(b.Center, b.HalfExtents, b.Rotation);
+            local2.Rotation = b.Rotation - a.Rotation;
+
+            sfloat theta = -sfloat.Deg2Rad(a.Rotation);
+            Matrix zRotation = new Matrix(libm.cosf(theta), libm.sinf(theta), -libm.sinf(theta), libm.cosf(theta),
+                sfloat.Zero, sfloat.Zero);
+
+            r = r.Transform(zRotation);
+            local2.Center = r;
+
+            return OBBvsAABB(local2, local1);
+            
             return false;
         }
 
@@ -98,12 +114,52 @@ namespace Alcatreize.alcatreize
             
             for (int i = 0; i < 4; i++)
             {
-                GD.Print(i + " " + axisToTest[i]);
                 if (!SAT.SAT.OverlapOnAxis(rect2, rect1, axisToTest[i]))
                     return false;
             }
 
             return true;
+        }
+
+        public static bool CapsuleVsCapsule (Capsule a, Capsule b)
+        {
+            if (OBBvsOBB(a.Body, b.Body)) return true;
+            if (CircleVsCircle(a.Top, b.Top)) return true;
+            if (CircleVsCircle(a.Top, b.Bottom)) return true;
+            if (CircleVsCircle(a.Bottom, b.Bottom)) return true;
+            if (CircleVsCircle(a.Bottom, b.Top)) return true;
+
+            return false;
+        }
+
+        public static bool AABBVsCapsule (AABB a, Capsule b)
+        {
+            if (OBBvsAABB(b.Body, a)) return true;
+
+            if (AABBvsCircle(a, b.Top)) return true;
+            if (AABBvsCircle(a, b.Bottom)) return true;
+            
+            return false;
+        }
+
+        public static bool OBBVsCapsule (OBB a, Capsule b)
+        {
+            if (OBBvsOBB(b.Body, a)) return true;
+
+            if (OBBvsCircle(a, b.Top)) return true;
+            if (OBBvsCircle(a, b.Bottom)) return true;
+
+            return false;
+        }
+
+        public static bool CircleVsCapsule (Circle a, Capsule b)
+        {
+            if (OBBvsCircle(b.Body, a)) return true;
+
+            if (CircleVsCircle(a, b.Top)) return true;
+            if (CircleVsCircle(a, b.Bottom)) return true;
+
+            return false;
         }
     }
 }

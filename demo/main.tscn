@@ -7,7 +7,7 @@
 position = Vector2( 24.9452, 53.4539 )
 
 [node name="Capsule" type="Node2D" parent="."]
-position = Vector2( 41.8227, 50.4409 )
+position = Vector2( 16.5553, 76.7131 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -57,7 +57,7 @@ __meta__ = {
 }
 
 [node name="Rectangle" type="Node2D" parent="."]
-position = Vector2( 12.1436, -44.4492 )
+position = Vector2( 118.519, 43.6639 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -81,15 +81,16 @@ __meta__ = {
 }
 
 [node name="Rectangle3" type="Node2D" parent="."]
-position = Vector2( 196.304, 2.3323 )
+position = Vector2( 175.525, -4.87929 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 Active = false
 IgnoreDirections = false
-ShapeType = 0
+ShapeType = 1
 HalfExtents = Vector2( 20, 20 )
+Rotation = -63.243
 FoundOn = 0
 SearchOn = 0
 
@@ -105,7 +106,7 @@ __meta__ = {
 }
 
 [node name="Rectangle2" type="Node2D" parent="."]
-position = Vector2( 205.888, 85.0072 )
+position = Vector2( 273.652, 22.8285 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -114,7 +115,7 @@ Active = false
 IgnoreDirections = false
 ShapeType = 1
 HalfExtents = Vector2( 30, 20 )
-Rotation = 43.871
+Rotation = 43.784
 FoundOn = 0
 SearchOn = 0
 
@@ -147,8 +148,6 @@ margin_left = -21.061
 margin_top = -17.3927
 margin_right = 18.939
 margin_bottom = 0.607269
-text = "Circle2
-"
 align = 1
 valign = 1
 __meta__ = {
@@ -156,7 +155,7 @@ __meta__ = {
 }
 
 [node name="Circle2" type="Node2D" parent="."]
-position = Vector2( 56.2913, -18.0858 )
+position = Vector2( 48.219, 34.2232 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -173,8 +172,6 @@ margin_left = -21.061
 margin_top = -17.3927
 margin_right = 18.939
 margin_bottom = 0.607269
-text = "Circle
-"
 align = 1
 valign = 1
 __meta__ = {

@@ -126,14 +126,31 @@ namespace Alcatreize
     {
         public sfloat2 Center;
         public sfloat Radius, Height;
+        public sfloat Rotation;
+
+        public OBB Body;
+        public Circle Top, Bottom;
         
         public Capsule () {}
         
-        public Capsule (sfloat2 center, sfloat radius, sfloat height)
+        public Capsule (sfloat2 center, sfloat radius, sfloat height, sfloat rotation)
         {
             Center = center;
             Radius = radius;
             Height = height;
+            Rotation = rotation;
+
+            sfloat theta = sfloat.Deg2Rad(Rotation);
+            Matrix zRotation = new Matrix(libm.cosf(theta), libm.sinf(theta), -libm.sinf(theta), libm.cosf(theta),
+                sfloat.Zero, sfloat.Zero);
+            
+            sfloat2 topPosition = new sfloat2(sfloat.Zero, height / (sfloat)2);
+            topPosition = topPosition.Transform(zRotation);
+
+            Body = new OBB(center, new sfloat2(radius, height / (sfloat)2), rotation);
+            
+            Top = new Circle(topPosition + Center, Radius);
+            Bottom = new Circle(Center - topPosition, Radius);
         }
     }
 }

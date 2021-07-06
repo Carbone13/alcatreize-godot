@@ -208,7 +208,7 @@ namespace  Alcatreize
                     shape = new Circle(Position, (sfloat)Radius);
                     break;
                 case ShapeType.Capsule:
-                    shape = new Capsule(Position, (sfloat) Radius, (sfloat) Height);
+                    shape = new Capsule(Position, (sfloat) Radius, (sfloat) Height, (sfloat)Rotation);
                     break;
             }
 
