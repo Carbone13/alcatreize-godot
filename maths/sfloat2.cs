@@ -163,6 +163,7 @@ public struct sfloat2
         final.X = X * matrix.A + Y * matrix.C + matrix.TX;
         final.Y = X * matrix.B + Y * matrix.D + matrix.TY;
 
+        this = final;
         return final;
     }
     

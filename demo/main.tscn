@@ -1,0 +1,185 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://alcatreize/drawer.cs" type="Script" id=1]
+[ext_resource path="res://alcatreize/shapes/Shape.cs" type="Script" id=2]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 24.9452, 53.4539 )
+
+[node name="Capsule" type="Node2D" parent="."]
+position = Vector2( 41.8227, 50.4409 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+IgnoreDirections = false
+ShapeType = 3
+Radius = 15.0
+Height = 30.0
+Rotation = 0.0
+FoundOn = 0
+SearchOn = 0
+
+[node name="Label2" type="Label" parent="Capsule"]
+margin_left = -20.0
+margin_top = -24.0
+margin_right = 20.0
+margin_bottom = -6.0
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Capsule2" type="Node2D" parent="."]
+position = Vector2( 97.9458, 113.579 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+IgnoreDirections = false
+ShapeType = 3
+Radius = 20.0
+Height = 30.0
+Rotation = -68.702
+FoundOn = 0
+SearchOn = 0
+
+[node name="Label2" type="Label" parent="Capsule2"]
+margin_left = -21.061
+margin_top = -17.3927
+margin_right = 18.939
+margin_bottom = 0.607269
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rectangle" type="Node2D" parent="."]
+position = Vector2( 12.1436, -44.4492 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+Active = false
+IgnoreDirections = false
+ShapeType = 0
+HalfExtents = Vector2( 20, 20 )
+FoundOn = 0
+SearchOn = 0
+
+[node name="Label2" type="Label" parent="Rectangle"]
+margin_left = -21.3947
+margin_top = -18.3939
+margin_right = 18.6053
+margin_bottom = -0.39386
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rectangle3" type="Node2D" parent="."]
+position = Vector2( 196.304, 2.3323 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+Active = false
+IgnoreDirections = false
+ShapeType = 0
+HalfExtents = Vector2( 20, 20 )
+FoundOn = 0
+SearchOn = 0
+
+[node name="Label2" type="Label" parent="Rectangle3"]
+margin_left = -21.3947
+margin_top = -18.3939
+margin_right = 18.6053
+margin_bottom = -0.39386
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rectangle2" type="Node2D" parent="."]
+position = Vector2( 205.888, 85.0072 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+Active = false
+IgnoreDirections = false
+ShapeType = 1
+HalfExtents = Vector2( 30, 20 )
+Rotation = 43.871
+FoundOn = 0
+SearchOn = 0
+
+[node name="Label2" type="Label" parent="Rectangle2"]
+margin_left = -21.061
+margin_top = -17.3927
+margin_right = 18.939
+margin_bottom = 0.607269
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Circle" type="Node2D" parent="."]
+position = Vector2( 72.5101, -34.8548 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+Active = false
+IgnoreDirections = false
+ShapeType = 2
+Radius = 20.0
+FoundOn = 0
+SearchOn = 0
+
+[node name="Label2" type="Label" parent="Circle"]
+margin_left = -21.061
+margin_top = -17.3927
+margin_right = 18.939
+margin_bottom = 0.607269
+text = "Circle2
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Circle2" type="Node2D" parent="."]
+position = Vector2( 56.2913, -18.0858 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+Active = false
+IgnoreDirections = false
+ShapeType = 2
+Radius = 20.0
+FoundOn = 0
+SearchOn = 0
+
+[node name="Label2" type="Label" parent="Circle2"]
+margin_left = -21.061
+margin_top = -17.3927
+margin_right = 18.939
+margin_bottom = 0.607269
+text = "Circle
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DRAWER" type="Node2D" parent="."]
+script = ExtResource( 1 )
