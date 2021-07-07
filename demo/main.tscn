@@ -1,17 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://alcatreize/drawer.cs" type="Script" id=1]
 [ext_resource path="res://alcatreize/shapes/Shape.cs" type="Script" id=2]
+[ext_resource path="res://alcatreize/entity/Actor.cs" type="Script" id=3]
 
-[node name="Node2D" type="Node2D"]
-position = Vector2( 24.9452, 53.4539 )
+[node name="main" type="Node2D"]
 
 [node name="Capsule" type="Node2D" parent="."]
-position = Vector2( 16.5553, 76.7131 )
+position = Vector2( 35.5967, 185.874 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+path = NodePath("../DRAWER")
 IgnoreDirections = false
 ShapeType = 3
 Radius = 15.0
@@ -32,11 +33,12 @@ __meta__ = {
 }
 
 [node name="Capsule2" type="Node2D" parent="."]
-position = Vector2( 97.9458, 113.579 )
+position = Vector2( 186.59, 183.069 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
+path = NodePath("../DRAWER")
 IgnoreDirections = false
 ShapeType = 3
 Radius = 20.0
@@ -57,12 +59,13 @@ __meta__ = {
 }
 
 [node name="Rectangle" type="Node2D" parent="."]
-position = Vector2( 118.519, 43.6639 )
+position = Vector2( 136.017, 89.9024 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 Active = false
+path = NodePath("../DRAWER")
 IgnoreDirections = false
 ShapeType = 0
 HalfExtents = Vector2( 20, 20 )
@@ -81,12 +84,13 @@ __meta__ = {
 }
 
 [node name="Rectangle3" type="Node2D" parent="."]
-position = Vector2( 175.525, -4.87929 )
+position = Vector2( 217.654, 48.8039 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 Active = false
+path = NodePath("../DRAWER")
 IgnoreDirections = false
 ShapeType = 1
 HalfExtents = Vector2( 20, 20 )
@@ -106,12 +110,13 @@ __meta__ = {
 }
 
 [node name="Rectangle2" type="Node2D" parent="."]
-position = Vector2( 273.652, 22.8285 )
+position = Vector2( 317.751, 75.3915 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 Active = false
+path = NodePath("../DRAWER")
 IgnoreDirections = false
 ShapeType = 1
 HalfExtents = Vector2( 30, 20 )
@@ -131,12 +136,13 @@ __meta__ = {
 }
 
 [node name="Circle" type="Node2D" parent="."]
-position = Vector2( 72.5101, -34.8548 )
+position = Vector2( 89.0431, 8.47721 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 Active = false
+path = NodePath("../DRAWER")
 IgnoreDirections = false
 ShapeType = 2
 Radius = 20.0
@@ -155,12 +161,13 @@ __meta__ = {
 }
 
 [node name="Circle2" type="Node2D" parent="."]
-position = Vector2( 48.219, 34.2232 )
+position = Vector2( 76.3804, 113.855 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 Active = false
+path = NodePath("../DRAWER")
 IgnoreDirections = false
 ShapeType = 2
 Radius = 20.0
@@ -180,3 +187,20 @@ __meta__ = {
 
 [node name="DRAWER" type="Node2D" parent="."]
 script = ExtResource( 1 )
+
+[node name="KinematicBody" type="Node2D" parent="."]
+position = Vector2( 154.664, 23.8236 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Node2D" type="Node2D" parent="KinematicBody"]
+visible = false
+script = ExtResource( 2 )
+path = NodePath("../../DRAWER")
+IgnoreDirections = false
+ShapeType = 2
+Radius = 20.0
+FoundOn = 1
+SearchOn = 1

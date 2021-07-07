@@ -1,4 +1,6 @@
 ﻿using System;
+using Alcatreize.Broadphase;
+using Alcatreize.Broadphase.GridShape;
 using Alcatreize.SAT;
 using Godot;
 using Godot.Collections;
@@ -16,16 +18,12 @@ namespace  Alcatreize
     /// internally we compare PrimitiveShape instead of Shapes
     /// </summary>
     [Tool]
-    public class Shape : Node2D
+    public class Shape : Entity
     {
-        public new sfloat2 Position
-        {
-            get { return GlobalPosition; }
-            set { GlobalPosition = value; }
-        }
-
         [Export] private Color color = new Color(0.094118f, 0.462745f, 0.52549f, 0.545098f);
+        [Export] public bool Static = false;
         [Export] public bool Active = true;
+        [Export] public NodePath path;
 
         private bool _ignoreDirections;
         public bool IgnoreDirections
@@ -53,12 +51,80 @@ namespace  Alcatreize
         public Vector2 HalfExtents = new Vector2(20, 20);
         public float Radius = 20;
         public float Height = 50;
+        
+        public int FoundOn = 1;
+        public int SearchOn = 1;
 
-        public override void _Ready ()
+        public int GridID = -1;
+        
+        public override void _Process (float delta)
         {
-            GetParent().GetNode<drawer>("DRAWER").shapes.Add(this);
+            base._Process(delta);
+            GetEnglobingShape();
+            Update();
         }
 
+        public Primitive GetShape ()
+        {
+            Primitive shape = null;
+            
+            switch (ShapeType)
+            {
+                case ShapeType.AABB:
+                    shape = new AABB(Position, HalfExtents);
+                    break;
+                case ShapeType.OBB:
+                    shape = new OBB(Position, HalfExtents, (sfloat)Rotation);
+                    break;
+                case ShapeType.Circle:
+                    shape = new Circle(Position, (sfloat)Radius);
+                    break;
+                case ShapeType.Capsule:
+                    shape = new Capsule(Position, (sfloat) Radius, (sfloat) Height, (sfloat)Rotation);
+                    break;
+            }
+
+            return shape;
+        }
+
+        public IConvex2D GetEnglobingShape ()
+        {
+            Primitive shape = GetShape();
+
+            GetNodeOrNull<drawer>(path).toDraw[this] = shape.ToGridShape();
+            return shape.ToGridShape();
+        }
+        
+        public override void _Draw ()
+        {
+            switch (ShapeType)
+            {
+                case ShapeType.AABB:
+                    DrawRect(new Rect2(-HalfExtents, HalfExtents * 2), color);
+                    break;
+                case ShapeType.OBB:
+                    DrawSetTransform(Vector2.Zero, (float)sfloat.Deg2Rad((sfloat)Rotation), Vector2.One);
+                    
+                    DrawRect(new Rect2(-HalfExtents, HalfExtents * 2), color);
+                    
+                    DrawSetTransform(Vector2.Zero, 0, Vector2.One);
+                    break;
+                case ShapeType.Circle:
+                    DrawCircle(Vector2.Zero, Radius, color);
+                    break;
+                case ShapeType.Capsule:
+                    DrawSetTransform(Vector2.Zero, (float)sfloat.Deg2Rad((sfloat)Rotation), Vector2.One);
+                    
+                    CapsuleShape2D shape = new CapsuleShape2D();
+                    shape.Height = Height;
+                    shape.Radius = Radius;
+                    shape.Draw(GetCanvasItem(), color);
+                    
+                    DrawSetTransform(Vector2.Zero, 0, Vector2.One);
+                    break;
+            }
+        }
+        
         public override Array _GetPropertyList ()
         {
             Array properties = new Array();
@@ -187,70 +253,6 @@ namespace  Alcatreize
             });
 
             return properties;
-        }
-
-        public int FoundOn;
-        public int SearchOn;
-
-        public Primitive GetShape ()
-        {
-            Primitive shape = null;
-            
-            switch (ShapeType)
-            {
-                case ShapeType.AABB:
-                    shape = new AABB(Position, HalfExtents);
-                    break;
-                case ShapeType.OBB:
-                    shape = new OBB(Position, HalfExtents, (sfloat)Rotation);
-                    break;
-                case ShapeType.Circle:
-                    shape = new Circle(Position, (sfloat)Radius);
-                    break;
-                case ShapeType.Capsule:
-                    shape = new Capsule(Position, (sfloat) Radius, (sfloat) Height, (sfloat)Rotation);
-                    break;
-            }
-
-            return shape;
-        }
-
-        public override void _Process (float delta)
-        {
-            GetNode<Label>("Label2").Text =
-            GetParent().GetNode<drawer>("DRAWER").CheckMeAgainstAll(this).ToString();
-            
-            Update();
-        }
-
-        public override void _Draw ()
-        {
-            switch (ShapeType)
-            {
-                case ShapeType.AABB:
-                    DrawRect(new Rect2(-HalfExtents, HalfExtents * 2), color);
-                    break;
-                case ShapeType.OBB:
-                    DrawSetTransform(Vector2.Zero, (float)sfloat.Deg2Rad((sfloat)Rotation), Vector2.One);
-                    
-                    DrawRect(new Rect2(-HalfExtents, HalfExtents * 2), color);
-                    
-                    DrawSetTransform(Vector2.Zero, 0, Vector2.One);
-                    break;
-                case ShapeType.Circle:
-                    DrawCircle(Vector2.Zero, Radius, color);
-                    break;
-                case ShapeType.Capsule:
-                    DrawSetTransform(Vector2.Zero, (float)sfloat.Deg2Rad((sfloat)Rotation), Vector2.One);
-                    
-                    CapsuleShape2D shape = new CapsuleShape2D();
-                    shape.Height = Height;
-                    shape.Radius = Radius;
-                    shape.Draw(GetCanvasItem(), color);
-                    
-                    DrawSetTransform(Vector2.Zero, 0, Vector2.One);
-                    break;
-            }
         }
     }
 }

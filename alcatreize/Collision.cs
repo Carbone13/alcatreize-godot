@@ -61,7 +61,7 @@ namespace Alcatreize.alcatreize
             sfloat r = a.Radius + b.Radius;
             r *= r;
 
-            return line.SquaredLength <= r;
+            return line.SquaredLength < r;
         }
 
         public static bool OBBvsCircle (OBB rect, Circle circle)
@@ -95,7 +95,7 @@ namespace Alcatreize.alcatreize
             closestPoint.Y = (closestPoint.Y > rect.Max.Y) ? rect.Max.Y : closestPoint.Y;
 
             sfloat2 line = circle.Center - closestPoint;
-            return line.SquaredLength <= circle.Radius * circle.Radius;
+            return line.SquaredLength < circle.Radius * circle.Radius;
         }
 
         public static bool OBBvsAABB (OBB rect1, AABB rect2)

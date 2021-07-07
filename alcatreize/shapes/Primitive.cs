@@ -1,10 +1,16 @@
-﻿using Alcatreize.Maths;
+﻿using Alcatreize.Broadphase;
+using Alcatreize.Broadphase.GridShape;
+using Alcatreize.Maths;
 using Alcatreize.SAT;
 using Godot;
 
 namespace Alcatreize
 {
-    public class Primitive {}
+    public abstract class Primitive
+    {
+        public abstract IConvex2D ToGridShape ();
+    }
+    
     public class AABB : Primitive
     {
         public sfloat2 Center;
@@ -19,6 +25,11 @@ namespace Alcatreize
         {
             Center = center;
             HalfExtents = halfExtents;
+        }
+
+        public override IConvex2D ToGridShape ()
+        {
+            return new GridAABB(Center - HalfExtents, Center - HalfExtents + (HalfExtents * (sfloat)2));
         }
         
         public Interval GetInterval (sfloat2 axis)
@@ -65,6 +76,12 @@ namespace Alcatreize
         
         public OBB () {}
 
+        public override IConvex2D ToGridShape ()
+        {
+            return new GridCircle(Center,
+                (float)libm.ceilf(libm.sqrtf(HalfExtents.X * HalfExtents.X + HalfExtents.Y * HalfExtents.Y)));
+        }
+        
         public OBB (sfloat2 center, sfloat2 halfExtents, sfloat rotation)
         {
             Center = center;
@@ -120,6 +137,11 @@ namespace Alcatreize
             Center = center;
             Radius = radius;
         }
+
+        public override IConvex2D ToGridShape ()
+        {
+            return new GridCircle(Center, (float) Radius);
+        }
     }
 
     public class Capsule : Primitive
@@ -151,6 +173,11 @@ namespace Alcatreize
             
             Top = new Circle(topPosition + Center, Radius);
             Bottom = new Circle(Center - topPosition, Radius);
+        }
+
+        public override IConvex2D ToGridShape ()
+        {
+            return new GridCircle(Center, (float)(Height / (sfloat)2 + Radius));
         }
     }
 }

@@ -3,14 +3,38 @@ using System;
 using System.Collections.Generic;
 using Alcatreize;
 using Alcatreize.alcatreize;
+using Alcatreize.Broadphase;
 using Alcatreize.Broadphase.GridShape;
-using Shape = Godot.Shape;
+using Shape = Alcatreize.Shape;
 
 [Tool]
 public class drawer : Node2D
 {
-    public List<Alcatreize.Shape> shapes = new List<Alcatreize.Shape>();
+    public Dictionary<Shape, IConvex2D> toDraw = new Dictionary<Shape, IConvex2D>();
 
+    public override void _Draw ()
+    {
+        Color col = Colors.Beige;
+        col.a = 0.3f;
+        foreach (IConvex2D shape in toDraw.Values)
+        {
+            if (shape is GridAABB rect)
+            {
+                DrawRect( new Rect2(rect.topLeft, rect.bottomRight - rect.topLeft), col);
+            }
+
+            if (shape is GridCircle circle)
+            {
+                DrawCircle(circle.center, circle.radius, col);
+            }
+        }
+    }
+
+    public override void _Process (float delta)
+    {
+        Update();
+    }
+    /*
     public string CheckMeAgainstAll (Alcatreize.Shape me)
     {
         string names = "";
@@ -107,5 +131,5 @@ public class drawer : Node2D
 
 
         return names;
-    }
+    }*/
 }
