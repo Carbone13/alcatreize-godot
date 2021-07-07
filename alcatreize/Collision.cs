@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using Alcatreize.Broadphase;
 using Alcatreize.Maths;
 using Alcatreize.SAT;
 using Godot;
@@ -7,6 +8,94 @@ namespace Alcatreize.alcatreize
 {
     public class Collision
     {
+        public static bool ShapeVsShape (Shape shapeA, Shape shapeB)
+        {
+            Primitive a = shapeA.GetShape();
+            Primitive b = shapeB.GetShape();
+
+            if (a is AABB aabb)
+                return AABBvsPrimitive(aabb, b);
+
+            if (a is OBB obb)
+                return OBBvsPrimitive(obb, b);
+
+            if (a is Circle circle)
+                return CirclevsPrimitive(circle, b);
+
+            if (a is Capsule capsule)
+                return CapsulevsPrimitive(capsule, b);
+
+            return false;
+        }
+
+        public static bool AABBvsPrimitive (AABB aabb, Primitive b)
+        {
+            if (b is AABB _aabb)
+                return AABBvsAABB(aabb, _aabb);
+
+            if (b is OBB obb)
+                return OBBvsAABB(obb, aabb);
+
+            if (b is Circle circle)
+                return AABBvsCircle(aabb, circle);
+
+            if (b is Capsule capsule)
+                return AABBVsCapsule(aabb, capsule);
+
+            return false;
+        }
+        
+        public static bool OBBvsPrimitive (OBB obb, Primitive b)
+        {
+            if (b is AABB _aabb)
+                return OBBvsAABB(obb, _aabb);
+
+            if (b is OBB _obb)
+                return OBBvsOBB(obb, _obb);
+
+            if (b is Circle circle)
+                return OBBvsCircle(obb, circle);
+
+            if (b is Capsule capsule)
+                return OBBVsCapsule(obb, capsule);
+
+            return false;
+        }
+        
+        public static bool CirclevsPrimitive (Circle circle, Primitive b)
+        {
+            if (b is AABB _aabb)
+                return AABBvsCircle(_aabb, circle);
+
+            if (b is OBB obb)
+                return OBBvsCircle(obb, circle);
+
+            if (b is Circle _circle)
+                return CircleVsCircle(_circle, circle);
+
+            if (b is Capsule capsule)
+                return CircleVsCapsule(circle, capsule);
+
+            return false;
+        }
+        
+        public static bool CapsulevsPrimitive (Capsule capsule, Primitive b)
+        {
+            if (b is AABB _aabb)
+                return AABBVsCapsule(_aabb, capsule);
+
+            if (b is OBB obb)
+                return OBBVsCapsule(obb, capsule);
+
+            if (b is Circle circle)
+                return CircleVsCapsule(circle, capsule);
+
+            if (b is Capsule _capsule)
+                return CapsuleVsCapsule(_capsule, capsule);
+
+            return false;
+        }
+        
         public static bool AABBvsAABBSAT (AABB a, AABB b)
         {
             sfloat2[] axisToTest = new sfloat2[2]

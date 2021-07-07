@@ -17,20 +17,20 @@ namespace Alcatreize.alcatreize
         
         public override void _Ready ()
         {
-            DynamicGrid = new DynamicGrid2D<int, Shape>(Vector2.Zero, 1200, 700, new Vector2(20, 20));
-            StaticGrid = new StaticGrid2D<Shape>(Vector2.Zero, 1200, 700, new Vector2(20, 20));
+            DynamicGrid = new DynamicGrid2D<int, Shape>(Vector2.Zero, 1200, 700, new Vector2(64, 64));
+            StaticGrid = new StaticGrid2D<Shape>(Vector2.Zero, 1200, 700, new Vector2(64, 64));
             
             singleton = this;
         }
 
         public override void _Draw ()
         {
-            for (int i = 0; i < 1200; i += 20)
+            for (int i = 0; i < 1200; i += 64)
             {
                 DrawLine(new Vector2(i, 0), new Vector2(i, 1200), Colors.Blue);
             }
             
-            for (int i = 0; i < 1200; i += 20)
+            for (int i = 0; i < 1200; i += 64)
             {
                 DrawLine(new Vector2(0, i), new Vector2(1200, i), Colors.Blue);
             }
@@ -61,13 +61,7 @@ namespace Alcatreize.alcatreize
             singleton.DynamicGrid.Update(shape.GridID, shape.GetEnglobingShape());
         }
 
-        public static IEnumerator<Shape> GetShapeInRange (Circle range)
-        {
-            return singleton.DynamicGrid.Contact(range.ToGridShape()).Concat(
-                singleton.StaticGrid.Contact(range.ToGridShape())) as IEnumerator<Shape>;
-        }
-
-        public static IEnumerable<Shape> GetShapeInRange (AABB range)
+        public static IEnumerable<Shape> GetShapeInRange (Primitive range)
         {
             return singleton.DynamicGrid.Contact(range.ToGridShape()).Concat(
                 singleton.StaticGrid.Contact(range.ToGridShape()));

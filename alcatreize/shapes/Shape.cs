@@ -1,4 +1,5 @@
 ﻿using System;
+using Alcatreize.alcatreize;
 using Alcatreize.Broadphase;
 using Alcatreize.Broadphase.GridShape;
 using Alcatreize.SAT;
@@ -56,6 +57,25 @@ namespace  Alcatreize
         public int SearchOn = 1;
 
         public int GridID = -1;
+
+        [Signal] public delegate void Ticked (Shape byWho);
+
+        public void TickColliders ()
+        {
+            // Loop through every shape near ourself (with an error margin of the Cell Size)
+            foreach (Shape shape in Physics.GetShapeInRange(GetShape()))
+            {
+                if (shape != this && shape.Overlap(this))
+                {
+                    shape.EmitSignal(nameof(Shape.Ticked), this);
+                }
+            }
+        }
+
+        public bool Overlap (Shape shape)
+        {
+            return Collision.ShapeVsShape(this, shape);
+        }
         
         public override void _Process (float delta)
         {
