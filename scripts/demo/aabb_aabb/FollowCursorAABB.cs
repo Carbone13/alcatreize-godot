@@ -1,6 +1,6 @@
 using Godot;
 
-public class DemoAABB : AABB
+public class FollowCursorAABB : AABB
 {
     [Export] private Color outsideColor, insideColor, deltaColor;
     [Export] private float tickness;
