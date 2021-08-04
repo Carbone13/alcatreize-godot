@@ -1,6 +1,9 @@
 ﻿using Godot;
 
-public class DemoAABB : AABB
+/// <summary>
+/// An AABB that follow the Cursor
+/// </summary>
+public class FollowCursorAABB : AABB
 {
     [Export] private Color outsideColor, insideColor, deltaColor;
     [Export] private float tickness;

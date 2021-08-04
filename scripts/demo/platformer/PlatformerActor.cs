@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 
-public class Player : Actor
+public class PlatformerActor : Actor
 {
     [Export] private float JumpHeight;
     [Export] private float JumpApexTime;

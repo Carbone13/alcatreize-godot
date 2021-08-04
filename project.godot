@@ -12,6 +12,7 @@ config_version=4
 
 config/name="alcatreize"
 run/main_scene="res://scenes/point_aabb.tscn"
+config/icon="res://icon.png"
 
 [autoload]
 

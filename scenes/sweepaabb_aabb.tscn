@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scripts/physics/AABB.cs" type="Script" id=1]
+[ext_resource path="res://scripts/physics/shapes/AABB.cs" type="Script" id=1]
 [ext_resource path="res://scripts/demo/SweepAABBDemo.cs" type="Script" id=2]
 [ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=3]
 
