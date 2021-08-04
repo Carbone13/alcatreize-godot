@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/physics/AABB.cs" type="Script" id=1]
+[ext_resource path="res://scripts/demo/MovableAABB.cs" type="Script" id=2]
+[ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 7
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 7
+font_data = ExtResource( 3 )
+
+[node name="Point vs AABB" type="Node2D"]
+
+[node name="Title" type="Label" parent="."]
+margin_right = 320.0
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 49.8853, -5.83125 )
+custom_fonts/font = SubResource( 1 )
+text = "Freeplay"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Controls" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4.76758
+margin_top = 159.145
+margin_right = 315.232
+margin_bottom = 338.145
+rect_pivot_offset = Vector2( 21.7868, -13.6517 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+custom_constants/line_spacing = -1
+text = "
+Move with keyboard Arrows | Left Joystick"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Other demo" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 2.0
+margin_right = 321.0
+margin_bottom = 181.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+custom_constants/line_spacing = -1
+text = " Demos :
+ 1- AABB vs Point 
+ 2- AABB vs Segment
+ 3- AABB vs AABB
+ 4- Sweep AABB
+ 5- Free Play
+ 6- Platformer
+ (navigate w/ keyboard)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AABB" type="Node2D" parent="."]
+position = Vector2( 97.055, 72.6274 )
+script = ExtResource( 1 )
+color = Color( 0.941176, 0.941176, 0.941176, 1 )
+thickness = 1.0
+halfExtents = Vector2( 10, 20 )
+
+[node name="AABB2" type="Node2D" parent="."]
+position = Vector2( 202.786, 136.245 )
+script = ExtResource( 1 )
+color = Color( 0.941176, 0.941176, 0.941176, 1 )
+thickness = 1.0
+halfExtents = Vector2( 20, 20 )
+
+[node name="AABB3" type="Node2D" parent="."]
+position = Vector2( 231.152, 61.16 )
+script = ExtResource( 1 )
+color = Color( 0.941176, 0.941176, 0.941176, 1 )
+thickness = 1.0
+halfExtents = Vector2( 30, 15 )
+
+[node name="AABB4" type="Node2D" parent="."]
+position = Vector2( 125.366, 124.899 )
+script = ExtResource( 1 )
+color = Color( 0.941176, 0.941176, 0.941176, 1 )
+thickness = 1.0
+halfExtents = Vector2( 20, 10 )
+
+[node name="Top Down Player" type="Node2D" parent="."]
+position = Vector2( 165, 88 )
+script = ExtResource( 2 )
+
+[node name="Collider" type="Node2D" parent="Top Down Player"]
+script = ExtResource( 1 )
+color = Color( 0.145098, 0.184314, 0.733333, 1 )
+thickness = 1.0
+halfExtents = Vector2( 7, 7 )

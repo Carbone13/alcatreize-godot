@@ -1,0 +1,189 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/physics/AABB.cs" type="Script" id=1]
+[ext_resource path="res://scripts/demo/SegmentDemo.cs" type="Script" id=2]
+[ext_resource path="res://font/Roboto-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 7
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 19
+outline_color = Color( 0.0235294, 0.996078, 0.0392157, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 10
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="Point vs AABB" type="Node2D"]
+
+[node name="Title" type="Label" parent="."]
+margin_right = 320.0
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 49.8853, -5.83125 )
+custom_fonts/font = SubResource( 1 )
+text = "AABB vs Segment"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Controls" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4.76758
+margin_top = 159.145
+margin_right = 315.232
+margin_bottom = 338.145
+rect_pivot_offset = Vector2( 21.7868, -13.6517 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+custom_constants/line_spacing = -1
+text = "Use left click to create segment
+Press right click to clear all segments"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Other demo" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 2.0
+margin_right = 321.0
+margin_bottom = 181.0
+rect_pivot_offset = Vector2( 21.7868, -13.6517 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.517647, 0.517647, 0.517647, 1 )
+custom_constants/line_spacing = -1
+text = " Demos :
+ 1- AABB vs Point 
+ 2- AABB vs Segment
+ 3- AABB vs AABB
+ 4- Sweep AABB
+ 5- Free Play
+ 6- Platformer
+ (navigate w/ keyboard)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Légende" type="Node" parent="."]
+
+[node name="Blue Dot" type="Label" parent="Légende"]
+margin_left = 184.057
+margin_top = 19.5317
+margin_right = 196.057
+margin_bottom = 45.5317
+rect_pivot_offset = Vector2( -10.4362, 7.063 )
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0.647059, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "•"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Légende/Blue Dot"]
+margin_left = 9.80186
+margin_top = 4.65587
+margin_right = 65.8019
+margin_bottom = 19.6559
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
+text = "inside"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Orange Dot" type="Label" parent="Légende"]
+margin_left = 136.075
+margin_top = 35.7124
+margin_right = 148.075
+margin_bottom = 61.7124
+rect_pivot_offset = Vector2( -50.2231, -0.608101 )
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 0.376471, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "•"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Légende/Orange Dot"]
+margin_left = 10.0992
+margin_top = 4.87885
+margin_right = 66.0992
+margin_bottom = 19.8788
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
+text = "sweeped"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Green Dot" type="Label" parent="Légende"]
+margin_left = 91.9913
+margin_top = 19.7194
+margin_right = 103.991
+margin_bottom = 45.7194
+rect_pivot_offset = Vector2( -50.2231, -0.608101 )
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0235294, 0.996078, 0.0392157, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "•"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Légende/Green Dot"]
+margin_left = 10.0992
+margin_top = 4.87885
+margin_right = 66.0992
+margin_bottom = 19.8788
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.729412, 0.729412, 0.729412, 1 )
+text = "outside"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AABB" type="Node2D" parent="."]
+position = Vector2( 160, 111 )
+script = ExtResource( 1 )
+color = Color( 0.941176, 0.941176, 0.941176, 1 )
+thickness = 1.0
+halfExtents = Vector2( 30, 20 )
+
+[node name="Segment Manager" type="Node2D" parent="."]
+script = ExtResource( 2 )
+outsideColor = Color( 0.0235294, 0.996078, 0.0392157, 1 )
+insideColor = Color( 0, 0.647059, 1, 1 )
+deltaColor = Color( 1, 0.376471, 0, 1 )
+dotColor = Color( 0.564706, 0.603922, 0.631373, 1 )
+tickness = 1.0
+target = NodePath("../AABB")
