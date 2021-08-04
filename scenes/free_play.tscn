@@ -104,6 +104,7 @@ halfExtents = Vector2( 20, 10 )
 [node name="Top Down Player" type="Node2D" parent="."]
 position = Vector2( 165, 88 )
 script = ExtResource( 2 )
+MoveSpeed = 70.0
 
 [node name="Collider" type="Node2D" parent="Top Down Player"]
 script = ExtResource( 1 )
